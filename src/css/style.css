@@ -1,17 +1,30 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  --font-primary: 'Montserrat', sans-serif;
+  --font-primary: "Montserrat", sans-serif;
+  --color-primary: #667eea;
+  --color-text-primary: #2d3748;
+  --color-text-secondary: #718096;
 }
 
 @layer base {
-  button {
+  button,
+  input {
     outline: none;
+  }
+
+  button {
     cursor: pointer;
     user-select: none;
   }
+}
 
-  input {
-    outline: none;
+@utility container {
+  width: min(648px, 100%);
+  padding-inline: 24px;
+  margin-inline: auto;
+
+  @media (width >= 0) {
+    @apply max-w-none;
   }
 }
