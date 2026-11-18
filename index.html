@@ -9,11 +9,11 @@
     />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./public/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="./public/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="./public/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./public/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="./public/favicon/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,16 +42,21 @@
             placeholder="Search for a city..."
             class="text-text-primary placeholder:text-text-secondary h-full flex-1 px-3 font-medium"
           />
+
           <button
             class="bg-primary flex size-12 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
+            type="submit"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.35-4.35"></path>
             </svg>
           </button>
+
           <button
+            id="location-btn"
             class="bg-primary flex size-12 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
+            type="button"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2v20M2 12h20"></path>
@@ -61,8 +66,8 @@
         </form>
 
         <!-- Author -->
-        <div class="text-text-primary font-medium">
-          <p class="">
+        <div id="footer-text" class="text-text-primary font-medium">
+          <p>
             Made with ❤️ by
             <a
               href="https://github.com/QuocThinh2312"
@@ -77,153 +82,215 @@
       </div>
 
       <!-- Weather Display -->
-      <main class="flex flex-col items-center justify-center gap-3">
-        <article class="flex flex-1 items-center rounded-2xl bg-white p-6 shadow-2xl">
-          <section class="flex flex-1 flex-col items-center text-center">
-            <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight md:text-3xl">
-              Ho Chi Minh City, VN
-            </h1>
+      <main class="w-full">
+        <div id="weather-skeleton" class="animate-pulse space-y-3">
+          <article class="flex w-full items-center rounded-2xl bg-white p-6 shadow-2xl">
+            <section class="flex flex-1 flex-col items-center">
+              <div class="mb-5 h-8 w-48 rounded-lg bg-slate-200 md:h-9"></div>
+              <div class="mb-5 size-40 rounded-full bg-slate-200"></div>
+              <div class="mb-4 h-8 w-32 rounded-2xl bg-slate-200 md:h-24 md:w-56"></div>
+              <div class="mb-2 h-8 w-44 rounded-lg bg-slate-200"></div>
+              <div class="h-5 w-48 rounded-md bg-slate-200 md:h-6"></div>
+            </section>
 
-            <img
-              id="weather-icon"
-              src="./public/icons/weather/sunny-day.svg"
-              alt="Thunderstorm With Light Rain"
-              class="mb-5 size-40 object-contain"
-            />
+            <ul class="flex flex-1 flex-wrap justify-center gap-6">
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-24 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
+                <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
+                <div class="mb-1.5 h-3.5 w-28 rounded bg-slate-200"></div>
+                <div class="h-5 w-14 rounded bg-slate-200"></div>
+              </li>
+            </ul>
+          </article>
 
-            <span id="current-temp" class="text-primary mb-4 text-xl font-extrabold tracking-wide md:text-8xl">
-              31.5°C
-            </span>
+          <section class="flex w-full flex-col items-center gap-2.5 rounded-2xl bg-white p-6 shadow-2xl">
+            <div class="h-8 w-44 rounded-lg bg-slate-200"></div>
 
-            <h2 id="weather-description" class="text-text-primary mb-2 text-2xl font-bold tracking-tight">
-              Thunderstorm With Light Rain
-            </h2>
-
-            <p class="text-text-secondary text-sm font-semibold md:text-base">
-              Min: <span id="min-temp">31°C</span>, Max:
-              <span id="max-temp">32°C</span>
-            </p>
+            <ul class="grid w-full grid-cols-3 items-center gap-6">
+              <li class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md">
+                <div class="h-5 w-16 rounded bg-slate-200"></div>
+                <div class="size-20 rounded-full bg-slate-200"></div>
+                <div class="h-9 w-24 rounded-lg bg-slate-200"></div>
+                <div class="h-5 w-28 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md">
+                <div class="h-5 w-24 rounded bg-slate-200"></div>
+                <div class="size-20 rounded-full bg-slate-200"></div>
+                <div class="h-9 w-24 rounded-lg bg-slate-200"></div>
+                <div class="h-5 w-28 rounded bg-slate-200"></div>
+              </li>
+              <li class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md">
+                <div class="h-5 w-20 rounded bg-slate-200"></div>
+                <div class="size-20 rounded-full bg-slate-200"></div>
+                <div class="h-9 w-24 rounded-lg bg-slate-200"></div>
+                <div class="h-5 w-28 rounded bg-slate-200"></div>
+              </li>
+            </ul>
           </section>
+        </div>
 
-          <ul class="flex flex-1 flex-wrap justify-center gap-6 font-bold">
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/humidity.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Humidity</h3>
-              <p id="humidity" class="text-base text-slate-700">75%</p>
-            </li>
+        <div id="weather-content" class="hidden space-y-3">
+          <article class="flex flex-1 items-center rounded-2xl bg-white p-6 shadow-2xl">
+            <section class="flex flex-1 flex-col items-center text-center">
+              <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight md:text-3xl"></h1>
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/wind.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Wind Speed</h3>
-              <p id="wind-speed" class="text-base text-slate-700">15 km/h</p>
-            </li>
+              <img id="weather-icon" src="/icons/weather/sunny-day.svg" alt="" class="mb-5 size-40 object-contain" />
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/thermometer-celsius.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Feels Like</h3>
-              <p id="feels-like" class="text-base text-slate-700">35°C</p>
-            </li>
+              <span id="current-temp" class="text-primary mb-4 text-xl font-extrabold tracking-wide md:text-8xl">
+              </span>
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/pressure.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Pressure</h3>
-              <p id="pressure" class="text-base text-slate-700">1012 hPa</p>
-            </li>
+              <h2 id="weather-description" class="text-text-primary mb-2 text-2xl font-bold tracking-tight"></h2>
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/visibility.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Visibility</h3>
-              <p id="visibility" class="text-base text-slate-700">10.0 km</p>
-            </li>
+              <p class="text-text-secondary text-sm font-semibold md:text-base">
+                Min: <span id="min-temp"></span>, Max:
+                <span id="max-temp"></span>
+              </p>
+            </section>
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/uv-index.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">UV INDEX</h3>
-              <p id="uv-index" class="text-base text-slate-700">0.0</p>
-            </li>
+            <ul class="flex flex-1 flex-wrap justify-center gap-6 font-bold">
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/humidity.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Humidity</h3>
+                <p id="humidity" class="text-base text-slate-700"></p>
+              </li>
 
-            <li
-              class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
-            >
-              <img src="./public/icons/rain.svg" alt="" class="mb-2.5 size-20" />
-              <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">CHANCE OF RAIN</h3>
-              <p id="chance-of-rain" class="text-base text-slate-700">8%</p>
-            </li>
-          </ul>
-        </article>
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/wind.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Wind Speed</h3>
+                <p id="wind-speed" class="text-base text-slate-700"></p>
+              </li>
 
-        <section
-          class="flex w-full flex-1 flex-col items-center gap-2.5 rounded-2xl bg-white p-6 text-center shadow-2xl"
-        >
-          <h2 class="text-text-primary text-2xl font-bold tracking-tight">3-Day Forecast</h2>
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/thermometer-celsius.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Feels Like</h3>
+                <p id="feels-like" class="text-base text-slate-700"></p>
+              </li>
 
-          <ul class="grid w-full grid-cols-3 items-center gap-6">
-            <li
-              class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
-            >
-              <h3 class="text-text-primary text-sm font-bold tracking-widest uppercase">Today</h3>
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/pressure.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Pressure</h3>
+                <p id="pressure" class="text-base text-slate-700"></p>
+              </li>
 
-              <img
-                id="weather-icon-today"
-                src="./public/icons/weather/sunny-day.svg"
-                alt=""
-                class="size-20 object-contain"
-              />
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/visibility.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Visibility</h3>
+                <p id="visibility" class="text-base text-slate-700"></p>
+              </li>
 
-              <p id="forecast-today-temp" class="text-primary text-3xl font-extrabold tracking-tighter">33°C</p>
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/uv-index.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">UV INDEX</h3>
+                <p id="uv-index" class="text-base text-slate-700"></p>
+              </li>
 
-              <p id="forecast-today-desc" class="text-text-secondary text-sm font-medium">Clouds</p>
-            </li>
+              <li
+                class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
+              >
+                <img src="/icons/rain.svg" alt="" class="mb-2.5 size-20" />
+                <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">CHANCE OF RAIN</h3>
+                <p id="chance-of-rain" class="text-base text-slate-700"></p>
+              </li>
+            </ul>
+          </article>
 
-            <li
-              class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
-            >
-              <h3 class="text-text-primary text-sm font-bold tracking-widest uppercase">TOMORROW</h3>
+          <section
+            class="flex w-full flex-1 flex-col items-center gap-2.5 rounded-2xl bg-white p-6 text-center shadow-2xl"
+          >
+            <h2 class="text-text-primary text-2xl font-bold tracking-tight">3-Day Forecast</h2>
 
-              <img
-                id="weather-icon-tomorrow"
-                src="./public/icons/weather/sunny-day.svg"
-                alt=""
-                class="size-20 object-contain"
-              />
+            <ul class="grid w-full grid-cols-3 items-center gap-6">
+              <li
+                class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
+              >
+                <h3 class="text-text-primary text-sm font-bold tracking-widest uppercase">Today</h3>
 
-              <p id="forecast-tomorrow-temp" class="text-primary text-3xl font-extrabold tracking-tighter">33°C</p>
+                <img id="weather-icon-today" src="/icons/weather/sunny-day.svg" alt="" class="size-20 object-contain" />
 
-              <p id="forecast-tomorrow-desc" class="text-text-secondary text-sm font-medium">Clouds</p>
-            </li>
+                <p id="forecast-today-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
 
-            <li
-              class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
-            >
-              <h3 id="forecast-day-after-day" class="text-text-primary text-sm font-bold tracking-widest uppercase">
-                TUE
-              </h3>
+                <p id="forecast-today-desc" class="text-text-secondary text-sm font-medium"></p>
+              </li>
 
-              <img
-                id="weather-icon-day-after"
-                src="./public/icons/weather/sunny-day.svg"
-                alt=""
-                class="size-20 object-contain"
-              />
+              <li
+                class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
+              >
+                <h3 class="text-text-primary text-sm font-bold tracking-widest uppercase">TOMORROW</h3>
 
-              <p id="forecast-day-after-temp" class="text-primary text-3xl font-extrabold tracking-tighter">33°C</p>
+                <img
+                  id="weather-icon-tomorrow"
+                  src="/icons/weather/sunny-day.svg"
+                  alt=""
+                  class="size-20 object-contain"
+                />
 
-              <p id="forecast-day-after-desc" class="text-text-secondary text-sm font-medium">Clouds</p>
-            </li>
-          </ul>
-        </section>
+                <p id="forecast-tomorrow-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
+
+                <p id="forecast-tomorrow-desc" class="text-text-secondary text-sm font-medium"></p>
+              </li>
+
+              <li
+                class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
+              >
+                <h3 id="forecast-day-after-day" class="text-text-primary text-sm font-bold tracking-widest uppercase">
+                  TUE
+                </h3>
+
+                <img
+                  id="weather-icon-day-after"
+                  src="/icons/weather/sunny-day.svg"
+                  alt=""
+                  class="size-20 object-contain"
+                />
+
+                <p id="forecast-day-after-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
+
+                <p id="forecast-day-after-desc" class="text-text-secondary text-sm font-medium"></p>
+              </li>
+            </ul>
+          </section>
+        </div>
       </main>
     </div>
 

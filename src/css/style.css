@@ -1,7 +1,7 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-primary: "Montserrat", sans-serif;
+  --font-primary: 'Montserrat', sans-serif;
   --color-primary: #667eea;
   --color-text-primary: #2d3748;
   --color-text-secondary: #718096;
@@ -27,4 +27,46 @@
   @media (width >= 0) {
     @apply max-w-none;
   }
+}
+
+@utility bg-day {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+@utility bg-night {
+  background: linear-gradient(
+    135deg in oklch,
+    oklch(19.44% 0.0498 267.74) 0%,
+    oklch(19.85% 0.0501 267.89) 3.2%,
+    oklch(20.33% 0.0504 268.17) 6.5%,
+    oklch(20.88% 0.0508 268.54) 9.7%,
+    oklch(21.5% 0.0513 268.94) 12.9%,
+    oklch(22.2% 0.0518 269.32) 16.1%,
+    oklch(22.96% 0.0523 269.65) 19.4%,
+    oklch(23.8% 0.0527 269.86) 22.6%,
+    oklch(24.71% 0.0531 269.91) 25.8%,
+    oklch(25.7% 0.0535 269.75) 29%,
+    oklch(26.75% 0.0537 269.34) 32.3%,
+    oklch(27.88% 0.0538 268.6) 35.5%,
+    oklch(29.1% 0.0537 267.47) 38.7%,
+    oklch(30.39% 0.0535 266.04) 41.9%,
+    oklch(31.76% 0.0531 264.4) 45.2%,
+    oklch(33.2% 0.0528 262.61) 48.4%,
+    oklch(34.7% 0.0524 260.77) 51.6%,
+    oklch(36.27% 0.0522 258.97) 54.8%,
+    oklch(37.9% 0.052 257.28) 58.1%,
+    oklch(39.58% 0.0521 255.79) 61.3%,
+    oklch(41.31% 0.0524 254.58) 64.5%,
+    oklch(43.11% 0.0531 253.73) 67.7%,
+    oklch(45.13% 0.0541 253.15) 71%,
+    oklch(47.37% 0.0554 252.79) 74.2%,
+    oklch(49.75% 0.057 252.6) 77.4%,
+    oklch(52.19% 0.0587 252.55) 80.6%,
+    oklch(54.63% 0.0606 252.6) 83.9%,
+    oklch(56.98% 0.0624 252.72) 87.1%,
+    oklch(59.17% 0.0641 252.87) 90.3%,
+    oklch(61.13% 0.0656 253) 93.5%,
+    oklch(62.77% 0.0669 253.09) 96.8%,
+    oklch(64.03% 0.0678 253.11) 100%
+  );
 }
