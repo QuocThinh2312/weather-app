@@ -6,14 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ./src/*.js"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "eslint": "^10.15.0",
+    "eslint-config-qzqt": "^1.0.4",
+    "globals": "^17.14.0",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "vite": "^8.3.6"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.5",
     "axios": "^1.21.1",
     "tailwindcss": "^4.3.5"
   }

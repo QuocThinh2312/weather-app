@@ -1,0 +1,73 @@
+const weatherIconMap = {
+  1000: 'sunny',
+  1003: 'partly-cloudy',
+  1063: 'light-rain',
+  1150: 'light-rain',
+  1153: 'light-rain',
+  1180: 'light-rain',
+  1183: 'light-rain',
+  1240: 'light-rain',
+  1066: 'light-snow',
+  1210: 'light-snow',
+  1213: 'light-snow',
+  1216: 'light-snow',
+  1255: 'light-snow',
+  1087: 'light-thunderstorm',
+  1273: 'light-thunderstorm',
+  1279: 'light-thunderstorm',
+  1006: 'overcast',
+  1009: 'overcast',
+  1030: 'fog',
+  1135: 'fog',
+  1147: 'fog',
+  1012: 'wind-dust',
+  1015: 'wind-dust',
+  1018: 'wind-dust',
+  1021: 'wind-dust',
+  1024: 'wind-dust',
+  1027: 'wind-dust',
+  1033: 'wind-dust',
+  1036: 'wind-dust',
+  1039: 'wind-dust',
+  1042: 'wind-dust',
+  1045: 'wind-dust',
+  1048: 'wind-dust',
+  1186: 'extreme-rain',
+  1189: 'extreme-rain',
+  1192: 'extreme-rain',
+  1195: 'extreme-rain',
+  1243: 'extreme-rain',
+  1246: 'extreme-rain',
+  1069: 'overcast-sleet',
+  1072: 'overcast-sleet',
+  1168: 'overcast-sleet',
+  1171: 'overcast-sleet',
+  1198: 'overcast-sleet',
+  1201: 'overcast-sleet',
+  1204: 'overcast-sleet',
+  1207: 'overcast-sleet',
+  1237: 'overcast-sleet',
+  1249: 'overcast-sleet',
+  1252: 'overcast-sleet',
+  1261: 'overcast-sleet',
+  1264: 'overcast-sleet',
+  1114: 'extreme-snow',
+  1117: 'extreme-snow',
+  1219: 'extreme-snow',
+  1222: 'extreme-snow',
+  1225: 'extreme-snow',
+  1258: 'extreme-snow',
+  1276: 'extreme-thunderstorm-rain',
+  1282: 'extreme-thunderstorm-rain',
+};
+
+export function getIconPath(code, isDay = 1) {
+  const baseName = weatherIconMap[code] || 'sunny';
+  const dayNightIcons = ['light-rain', 'light-snow', 'light-thunderstorm', 'partly-cloudy', 'sunny'];
+
+  if (dayNightIcons.includes(baseName)) {
+    return `/icons/weather/${baseName}-${isDay ? 'day' : 'night'}.svg`;
+  }
+
+  return `/icons/weather/${baseName}.svg`;
+}
