@@ -50,7 +50,7 @@ function renderBackgroundColor(isDay) {
   }
 }
 
-export function renderWeatherUI(weatherData) {
+export function renderWeatherData(weatherData) {
   if (!weatherData) {
     return;
   }
