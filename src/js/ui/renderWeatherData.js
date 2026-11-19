@@ -26,7 +26,7 @@ const weatherIconTodayEl = document.querySelector('#weather-icon-today');
 const weatherIconTomorrowEl = document.querySelector('#weather-icon-tomorrow');
 const weatherIconDayAfterEl = document.querySelector('#weather-icon-day-after');
 
-const footerTextEl = document.querySelector('#footer-text');
+const footerTextList = document.querySelectorAll('[data-role="footer-text"]');
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -39,14 +39,18 @@ function renderBackgroundColor(isDay) {
     document.body.classList.add('bg-day');
     document.body.classList.remove('bg-night');
 
-    footerTextEl.classList.add('text-text-primary');
-    footerTextEl.classList.remove('text-white');
+    footerTextList.forEach((ele) => {
+      ele.classList.add('text-text-primary');
+      ele.classList.remove('text-white');
+    });
   } else {
     document.body.classList.remove('bg-day');
     document.body.classList.add('bg-night');
 
-    footerTextEl.classList.add('text-white');
-    footerTextEl.classList.remove('text-text-primary');
+    footerTextList.forEach((ele) => {
+      ele.classList.remove('text-text-primary');
+      ele.classList.add('text-white');
+    });
   }
 }
 

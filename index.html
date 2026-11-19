@@ -25,8 +25,8 @@
 
     <title>Weather App</title>
   </head>
-  <body class="font-primary bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)] p-4.5">
-    <div class="grid grid-cols-[1fr_3fr] items-start gap-2.5">
+  <body class="font-primary bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)] p-4.5 lg:h-dvh">
+    <div class="grid h-full grid-cols-1 items-start gap-10 lg:grid-cols-[1fr_3fr] lg:gap-2.5">
       <div class="flex h-full flex-col justify-between">
         <!-- Search Form -->
         <form
@@ -34,17 +34,17 @@
           action=""
           autocomplete="off"
           spellcheck="false"
-          class="mb-8 flex items-center gap-2.5 rounded-2xl bg-white p-3 text-white"
+          class="flex items-center gap-2.5 rounded-2xl bg-white p-3 text-white lg:mb-8"
         >
           <input
             id="search-input"
             type="text"
             placeholder="Search for a city..."
-            class="text-text-primary placeholder:text-text-secondary h-full flex-1 px-3 font-medium"
+            class="text-text-primary placeholder:text-text-secondary mr-auto h-full max-w-[60%] flex-1 px-3 font-medium md:mr-0 md:max-w-none"
           />
 
           <button
-            class="bg-primary flex size-12 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
+            class="bg-primary flex size-12 shrink-0 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
             type="submit"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,7 +55,7 @@
 
           <button
             id="location-btn"
-            class="bg-primary flex size-12 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
+            class="bg-primary flex size-12 shrink-0 items-center justify-center rounded-2xl transition-transform duration-150 hover:opacity-80 active:scale-110"
             type="button"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -66,7 +66,7 @@
         </form>
 
         <!-- Author -->
-        <div id="footer-text" class="text-text-primary font-medium">
+        <div data-role="footer-text" class="text-text-primary hidden font-medium lg:block">
           <p>
             Made with ❤️ by
             <a
@@ -82,7 +82,7 @@
       </div>
 
       <!-- Weather Display -->
-      <main class="w-full">
+      <main class="size-full">
         <div id="weather-skeleton" class="animate-pulse space-y-3">
           <article class="flex w-full items-center rounded-2xl bg-white p-6 shadow-2xl">
             <section class="flex flex-1 flex-col items-center">
@@ -158,14 +158,16 @@
           </section>
         </div>
 
-        <div id="weather-content" class="hidden space-y-3">
-          <article class="flex flex-1 items-center rounded-2xl bg-white p-6 shadow-2xl">
+        <div id="weather-content" class="hidden h-full space-y-3 md:flex md:flex-col">
+          <article
+            class="flex flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl lg:flex-row lg:gap-0 lg:p-6"
+          >
             <section class="flex flex-1 flex-col items-center text-center">
-              <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight md:text-3xl"></h1>
+              <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight sm:text-3xl"></h1>
 
               <img id="weather-icon" src="/icons/weather/sunny-day.svg" alt="" class="mb-5 size-40 object-contain" />
 
-              <span id="current-temp" class="text-primary mb-4 text-xl font-extrabold tracking-wide md:text-8xl">
+              <span id="current-temp" class="text-primary mb-4 text-5xl font-extrabold tracking-wide md:text-8xl">
               </span>
 
               <h2 id="weather-description" class="text-text-primary mb-2 text-2xl font-bold tracking-tight"></h2>
@@ -176,7 +178,9 @@
               </p>
             </section>
 
-            <ul class="flex flex-1 flex-wrap justify-center gap-6 font-bold">
+            <ul
+              class="grid grid-cols-2 gap-6 text-center font-bold sm:grid-cols-3 md:flex md:flex-1 md:flex-wrap md:justify-center"
+            >
               <li
                 class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
               >
@@ -236,11 +240,11 @@
           </article>
 
           <section
-            class="flex w-full flex-1 flex-col items-center gap-2.5 rounded-2xl bg-white p-6 text-center shadow-2xl"
+            class="flex w-full flex-1 flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 text-center shadow-2xl"
           >
             <h2 class="text-text-primary text-2xl font-bold tracking-tight">3-Day Forecast</h2>
 
-            <ul class="grid w-full grid-cols-3 items-center gap-6">
+            <ul class="grid w-full grid-cols-1 items-center gap-6 md:grid-cols-3">
               <li
                 class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg"
               >
@@ -292,6 +296,21 @@
           </section>
         </div>
       </main>
+
+      <!-- Author -->
+      <div data-role="footer-text" class="text-text-primary flex items-center justify-between font-medium lg:hidden">
+        <p>
+          Made with ❤️ by
+          <a
+            href="https://github.com/QuocThinh2312"
+            target="_blank"
+            class="bg-[linear-gradient(90deg,#a855f7,#ec4899,#fbbf24)] bg-size-[200%_auto] bg-clip-text font-semibold text-transparent transition-[background-position] duration-150 ease-in hover:bg-bottom"
+          >
+            Quang Zõ
+          </a>
+        </p>
+        <span class="hidden opacity-70 sm:block">Copyright © 2026</span>
+      </div>
     </div>
 
     <div
