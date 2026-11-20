@@ -1,6 +1,6 @@
 const OPTIONS = {
   enableHighAccuracy: false,
-  timeout: 10000,
+  timeout: 20000,
   maximumAge: 300000,
 };
 
