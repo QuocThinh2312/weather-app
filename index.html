@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="@container">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,8 +25,8 @@
 
     <title>Weather App</title>
   </head>
-  <body class="font-primary bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)] p-4.5 lg:h-dvh">
-    <div class="grid h-full grid-cols-1 items-start gap-10 lg:grid-cols-[1fr_3fr] lg:gap-2.5">
+  <body class="font-primary bg-[linear-gradient(135deg,#fbc2eb_0%,#a6c1ee_100%)] p-4.5 @6xl:h-dvh">
+    <div class="grid h-full grid-cols-1 items-start gap-10 @6xl:grid-cols-[1fr_3fr] @6xl:gap-2.5">
       <div class="flex h-full flex-col justify-between">
         <!-- Search Form -->
         <form
@@ -34,7 +34,7 @@
           action=""
           autocomplete="off"
           spellcheck="false"
-          class="flex items-center gap-2.5 rounded-2xl bg-white p-3 text-white lg:mb-8"
+          class="flex items-center gap-2.5 rounded-2xl bg-white p-3 text-white @6xl:mb-8"
         >
           <input
             id="search-input"
@@ -66,7 +66,7 @@
         </form>
 
         <!-- Author -->
-        <div data-role="footer-text" class="text-text-primary hidden font-medium lg:block">
+        <div data-role="footer-text" class="text-text-primary hidden font-medium @6xl:block">
           <p>
             Made with ❤️ by
             <a
@@ -83,17 +83,21 @@
 
       <!-- Weather Display -->
       <main class="size-full">
-        <div id="weather-skeleton" class="animate-pulse space-y-3">
-          <article class="flex w-full items-center rounded-2xl bg-white p-6 shadow-2xl">
+        <div id="weather-skeleton" class="h-full animate-pulse space-y-3 md:flex md:flex-col">
+          <article
+            class="flex w-full flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl @6xl:flex-row @6xl:gap-0 @6xl:p-6"
+          >
             <section class="flex flex-1 flex-col items-center">
-              <div class="mb-5 h-8 w-48 rounded-lg bg-slate-200 md:h-9"></div>
+              <div class="mb-5 h-8 w-48 rounded-lg bg-slate-200 sm:h-9"></div>
               <div class="mb-5 size-40 rounded-full bg-slate-200"></div>
-              <div class="mb-4 h-8 w-32 rounded-2xl bg-slate-200 md:h-24 md:w-56"></div>
+              <div class="mb-4 h-12 w-32 rounded-2xl bg-slate-200 md:h-24 md:w-56"></div>
               <div class="mb-2 h-8 w-44 rounded-lg bg-slate-200"></div>
               <div class="h-5 w-48 rounded-md bg-slate-200 md:h-6"></div>
             </section>
 
-            <ul class="flex flex-1 flex-wrap justify-center gap-6">
+            <ul
+              class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 @6xl:flex @6xl:flex-1 @6xl:flex-wrap @6xl:justify-center"
+            >
               <li class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
                 <div class="mb-2.5 size-20 rounded-2xl bg-slate-200"></div>
                 <div class="mb-1.5 h-3.5 w-20 rounded bg-slate-200"></div>
@@ -132,10 +136,12 @@
             </ul>
           </article>
 
-          <section class="flex w-full flex-col items-center gap-2.5 rounded-2xl bg-white p-6 shadow-2xl">
+          <section
+            class="flex w-full flex-1 flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-2xl"
+          >
             <div class="h-8 w-44 rounded-lg bg-slate-200"></div>
 
-            <ul class="grid w-full grid-cols-3 items-center gap-6">
+            <ul class="grid w-full grid-cols-1 items-center gap-6 md:grid-cols-3">
               <li class="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-white p-6 shadow-md">
                 <div class="h-5 w-16 rounded bg-slate-200"></div>
                 <div class="size-20 rounded-full bg-slate-200"></div>
@@ -158,9 +164,9 @@
           </section>
         </div>
 
-        <div id="weather-content" class="hidden h-full space-y-3 md:flex md:flex-col">
+        <div id="weather-content" class="h-full space-y-3 md:flex md:flex-col">
           <article
-            class="flex flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl lg:flex-row lg:gap-0 lg:p-6"
+            class="flex flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl @6xl:flex-row @6xl:gap-0 @6xl:p-6"
           >
             <section class="flex flex-1 flex-col items-center text-center">
               <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight sm:text-3xl"></h1>
@@ -179,7 +185,7 @@
             </section>
 
             <ul
-              class="grid grid-cols-2 gap-6 text-center font-bold sm:grid-cols-3 md:flex md:flex-1 md:flex-wrap md:justify-center"
+              class="grid grid-cols-2 gap-6 text-center font-bold sm:grid-cols-3 md:grid-cols-4 @6xl:flex @6xl:flex-1 @6xl:flex-wrap @6xl:justify-center"
             >
               <li
                 class="flex flex-col items-center justify-center rounded-2xl bg-white p-3 shadow-sm transition-transform hover:scale-105"
@@ -298,7 +304,7 @@
       </main>
 
       <!-- Author -->
-      <div data-role="footer-text" class="text-text-primary flex items-center justify-between font-medium lg:hidden">
+      <div data-role="footer-text" class="text-text-primary flex items-center justify-between font-medium @6xl:hidden">
         <p>
           Made with ❤️ by
           <a

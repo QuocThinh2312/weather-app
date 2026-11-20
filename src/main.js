@@ -1,10 +1,12 @@
-import './css/style.css';
-import { fetchWeather } from './js/services/weatherApi';
-import { renderWeatherData } from './js/ui/renderWeatherData';
-import { toggleSkeleton } from './js/ui/toggleSkeleton';
-import { handleModalEvent } from './js/ui/handleModalEvent';
-import { isModalOpen } from './js/ui/handleModalEvent';
-import { getCurrentCoords } from './js/utils/getCurrentCoords';
+import './style.css';
+import { fetchWeather } from './api/weatherApi';
+import { renderWeatherData } from './ui/renderWeatherData';
+import { toggleSkeleton } from './ui/toggleSkeleton';
+import { handleModalEvent } from './ui/handleModalEvent';
+import { isModalOpen } from './ui/handleModalEvent';
+import { getCurrentCoords } from './utils/getCurrentCoords';
+import { cachedWeatherData, storeWeatherData, checkStoredData } from './utils/storage';
+import { normalizeLocationQuery } from './utils/normalizeLocationQuery';
 
 const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('#search-input');
@@ -34,12 +36,20 @@ function cleanupRequest(controller) {
 
 async function loadWeather(query, signal) {
   try {
-    const weatherData = await fetchWeather(query, signal);
+    const hasStoredData = checkStoredData(query);
+    let weatherData;
+
+    if (!hasStoredData) {
+      weatherData = await fetchWeather(query, signal);
+    } else {
+      weatherData = cachedWeatherData.get(query).data;
+    }
+
     if (!weatherData) {
       return false;
     }
     renderWeatherData(weatherData);
-    return true;
+    return weatherData;
   } catch (error) {
     if (error.name === 'AbortError') {
       return null;
@@ -62,15 +72,16 @@ formEl.addEventListener('submit', async (e) => {
   }
 
   const controller = startRequest();
+  const cleanQuery = normalizeLocationQuery(query);
 
   try {
-    const isSuccess = await loadWeather(query, controller.signal);
+    const weatherData = await loadWeather(cleanQuery, controller.signal);
 
     // Phân biệt với null là do chủ động abort request
-    if (isSuccess === false) {
+    if (weatherData === false) {
       handleModalEvent('Location name does not exist!');
-    } else if (isSuccess) {
-      localStorage.setItem(STORAGE_KEY, query);
+    } else if (weatherData) {
+      storeWeatherData(cleanQuery, weatherData);
     }
   } catch {
     console.error('Error rendering weather data');
@@ -93,12 +104,12 @@ locationBtnEl.addEventListener('click', async () => {
       return;
     }
 
-    const isSuccess = await loadWeather(`${latitude}, ${longitude}`, controller.signal);
+    const weatherData = await loadWeather(`${latitude}, ${longitude}`, controller.signal);
 
-    if (isSuccess === false) {
+    if (weatherData === false) {
       handleModalEvent('Weather data is not available for your current location. Please try another location!');
-    } else if (isSuccess) {
-      localStorage.removeItem(STORAGE_KEY);
+    } else if (weatherData) {
+      storeWeatherData(`${latitude}, ${longitude}`, weatherData);
     }
   } catch (error) {
     if (controller.signal.aborted) {
@@ -120,7 +131,7 @@ async function initApp() {
     const isSuccess = await loadWeather(savedCity, controller.signal);
 
     if (isSuccess === false) {
-      const fallbackCity = 'Ho Chi Minh city';
+      const fallbackCity = 'ho chi minh';
       await loadWeather(fallbackCity, controller.signal);
     }
   } catch {

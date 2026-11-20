@@ -5,5 +5,6 @@ export function normalizeLocationQuery(query) {
     .replace(/đ/g, 'd')
     .replace(/Đ/g, 'D')
     .replace(/^(thanh pho|tp\.?|tinh)\s+/i, '')
-    .trim();
+    .trim()
+    .toLowerCase();
 }
