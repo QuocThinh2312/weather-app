@@ -169,9 +169,34 @@
             class="flex flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl @6xl:flex-row @6xl:gap-0 @6xl:p-6"
           >
             <section class="flex flex-1 flex-col items-center text-center">
-              <h1 id="location-name" class="text-text-primary mb-5 text-2xl font-bold tracking-tight sm:text-3xl"></h1>
+              <h1 id="location-name" class="text-text-primary mb-3 text-2xl font-bold tracking-tight sm:text-3xl"></h1>
 
-              <img id="weather-icon" src="/icons/weather/sunny-day.svg" alt="" class="mb-5 size-40 object-contain" />
+              <!-- Time -->
+              <div
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-3.5 py-1.5 text-sm font-semibold"
+              >
+                <svg
+                  class="text-primary size-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+
+                <time id="local-time" class="text-text-primary font-bold tabular-nums"></time>
+
+                <span class="text-slate-300" aria-hidden="true">•</span>
+
+                <span id="local-date" class="text-text-secondary"></span>
+              </div>
+
+              <img id="weather-icon" src="/icons/weather/sunny-day.svg" alt="" class="size-40 object-contain" />
 
               <span id="current-temp" class="text-primary mb-4 text-5xl font-extrabold tracking-wide md:text-8xl">
               </span>

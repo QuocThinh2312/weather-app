@@ -7,6 +7,7 @@ import { isModalOpen } from './ui/handleModalEvent';
 import { getCurrentCoords } from './utils/getCurrentCoords';
 import { cachedWeatherData, storeWeatherData, checkStoredData } from './utils/storage';
 import { normalizeLocationQuery } from './utils/normalizeLocationQuery';
+import { startClock } from './ui/startClock';
 
 const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('#search-input');
@@ -49,6 +50,7 @@ async function loadWeather(query, signal) {
       return false;
     }
     renderWeatherData(weatherData);
+    startClock(weatherData.location.tz_id);
     return weatherData;
   } catch (error) {
     if (error.name === 'AbortError') {
