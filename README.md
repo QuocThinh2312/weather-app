@@ -19,5 +19,5 @@ A clean, responsive weather dashboard built with **Vanilla JavaScript** and **Ta
 
 - **Core:** HTML5, Tailwind CSS v4, Vanilla JavaScript (ES6+)
 - **Build Tool:** Vite
-- **APIs:** [WeatherAPI](https://www.weatherapi.com/)
+- **API:** [WeatherAPI](https://www.weatherapi.com/)
 - **Icons:** [Meteocons](https://meteocons.com/)
