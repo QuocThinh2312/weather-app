@@ -11,7 +11,7 @@ export function storeWeatherData(query, weatherData) {
 
   const newWeatherData = {
     data: weatherData,
-    expiresAt: Date.now() + 60 * 5 * 1000,
+    expiresAt: Date.now() + 60 * 5 * 1000, //Expires in 5 minutes
   };
   cachedWeatherData.set(query, newWeatherData);
 
@@ -23,6 +23,7 @@ export function checkStoredData(query) {
     const weatherData = cachedWeatherData.get(query);
     const now = Date.now();
 
+    //Delete expired data
     if (weatherData.expiresAt <= now) {
       cachedWeatherData.delete(query);
       return false;

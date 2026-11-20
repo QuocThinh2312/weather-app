@@ -63,10 +63,9 @@ export function renderWeatherData(weatherData) {
     location,
     current: currentWeather,
     forecast: {
-      forecastday: [{ day: todayWeather }, { day: tomorrowWeather }, dayAfterInfo],
+      forecastday: [{ day: todayWeather }, { day: tomorrowWeather }, { date: dayAfterDate, day: dayAfterWeather }],
     },
   } = weatherData;
-  const { date: dayAfterDate, day: dayAfterWeather } = dayAfterInfo;
 
   renderBackgroundColor(currentWeather.is_day);
 

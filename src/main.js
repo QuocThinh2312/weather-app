@@ -2,8 +2,7 @@ import './style.css';
 import { fetchWeather } from './api/weatherApi';
 import { renderWeatherData } from './ui/renderWeatherData';
 import { toggleSkeleton } from './ui/toggleSkeleton';
-import { handleModalEvent } from './ui/handleModalEvent';
-import { isModalOpen } from './ui/handleModalEvent';
+import { handleModalEvent, isModalOpen } from './ui/handleModalEvent';
 import { getCurrentCoords } from './utils/getCurrentCoords';
 import { cachedWeatherData, storeWeatherData, checkStoredData } from './utils/storage';
 import { normalizeLocationQuery } from './utils/normalizeLocationQuery';
@@ -13,7 +12,6 @@ const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('#search-input');
 const locationBtnEl = document.querySelector('#location-btn');
 
-const STORAGE_KEY = 'lastSearchedCity';
 let currentController = null;
 
 function startRequest() {
@@ -49,8 +47,10 @@ async function loadWeather(query, signal) {
     if (!weatherData) {
       return false;
     }
+
     renderWeatherData(weatherData);
     startClock(weatherData.location.tz_id);
+    
     return weatherData;
   } catch (error) {
     if (error.name === 'AbortError') {
@@ -98,7 +98,6 @@ locationBtnEl.addEventListener('click', async () => {
   const controller = startRequest();
 
   try {
-    toggleSkeleton(true);
     const { latitude, longitude } = await getCurrentCoords();
 
     // Nếu request này đã bị aborted do đã gọi request mới thì thoát luôn
@@ -126,7 +125,7 @@ locationBtnEl.addEventListener('click', async () => {
 });
 
 async function initApp() {
-  const savedCity = localStorage.getItem(STORAGE_KEY) ?? 'auto:ip';
+  const savedCity = localStorage.getItem('lastSearchedCity') ?? 'auto:ip';
   const controller = startRequest();
 
   try {
