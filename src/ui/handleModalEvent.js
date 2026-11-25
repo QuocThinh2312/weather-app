@@ -5,9 +5,10 @@ const inputEl = document.querySelector('#search-input');
 
 export let isModalOpen = false;
 
-function showModal(message) {
+function showModal(message, isServerOffline) {
   errorModalMessageEl.textContent = message;
   errorModalEl.setAttribute('data-open', '');
+  errorModalEl.setAttribute('isServerOffline', isServerOffline);
   isModalOpen = true;
   document.activeElement?.blur();
 }
@@ -21,6 +22,10 @@ function closeModal() {
   errorModalEl.removeAttribute('data-open');
   isModalOpen = false;
   inputEl.focus();
+
+  if (errorModalEl.getAttribute('isServerOffline')) {
+    location.reload();
+  }
 }
 
 errorModalEl.addEventListener('click', (e) => {
@@ -40,6 +45,6 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-export function handleModalEvent(message) {
-  showModal(message);
+export function handleModalEvent(message, isServerOffline = false) {
+  showModal(message, isServerOffline);
 }

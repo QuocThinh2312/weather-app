@@ -1,5 +1,6 @@
 import './style.css';
 import { fetchWeather } from './api/weatherApi';
+import { getLocationName } from './api/locationNameApi';
 import { renderWeatherData } from './ui/renderWeatherData';
 import { toggleSkeleton } from './ui/toggleSkeleton';
 import { handleModalEvent, isModalOpen } from './ui/handleModalEvent';
@@ -33,6 +34,12 @@ function cleanupRequest(controller) {
   }
 }
 
+function handleFetchSuccess(query, weatherData) {
+  renderWeatherData(weatherData);
+  startClock(weatherData.location.tz_id);
+  storeWeatherData(query, weatherData);
+}
+
 async function loadWeather(query, signal) {
   try {
     const hasStoredData = checkStoredData(query);
@@ -44,14 +51,7 @@ async function loadWeather(query, signal) {
       weatherData = cachedWeatherData.get(query).data;
     }
 
-    if (!weatherData) {
-      return false;
-    }
-
-    renderWeatherData(weatherData);
-    startClock(weatherData.location.tz_id);
-    
-    return weatherData;
+    return weatherData ? weatherData : false;
   } catch (error) {
     if (error.name === 'AbortError') {
       return null;
@@ -83,10 +83,10 @@ formEl.addEventListener('submit', async (e) => {
     if (weatherData === false) {
       handleModalEvent('Location name does not exist!');
     } else if (weatherData) {
-      storeWeatherData(cleanQuery, weatherData);
+      handleFetchSuccess(cleanQuery, weatherData);
     }
-  } catch {
-    console.error('Error rendering weather data');
+  } catch (error) {
+    handleModalEvent(error.message, true);
   } finally {
     cleanupRequest(controller);
   }
@@ -105,20 +105,29 @@ locationBtnEl.addEventListener('click', async () => {
       return;
     }
 
-    const weatherData = await loadWeather(`${latitude}, ${longitude}`, controller.signal);
+    const lat = latitude.toFixed(3);
+    const lon = longitude.toFixed(3);
+    const query = `${lat},${lon}`;
 
-    if (weatherData === false) {
+    const [weatherData, exactLocationName] = await Promise.all([
+      loadWeather(query, controller.signal),
+      getLocationName(lat, lon, controller.signal),
+    ]);
+
+    if (weatherData) {
+      if (exactLocationName) {
+        weatherData.location.name = exactLocationName;
+      }
+      handleFetchSuccess(query, weatherData);
+    } else if (weatherData !== null) {
       handleModalEvent('Weather data is not available for your current location. Please try another location!');
-    } else if (weatherData) {
-      storeWeatherData(`${latitude}, ${longitude}`, weatherData);
     }
   } catch (error) {
     if (controller.signal.aborted) {
       return;
     }
 
-    console.error('Error getting current coords: ', error);
-    handleModalEvent(error.message);
+    handleModalEvent(error.message, true);
   } finally {
     cleanupRequest(controller);
   }
@@ -129,14 +138,18 @@ async function initApp() {
   const controller = startRequest();
 
   try {
-    const isSuccess = await loadWeather(savedCity, controller.signal);
+    let weatherData = await loadWeather(savedCity, controller.signal);
 
-    if (isSuccess === false) {
+    if (weatherData === false) {
       const fallbackCity = 'ho chi minh';
-      await loadWeather(fallbackCity, controller.signal);
+      weatherData = await loadWeather(fallbackCity, controller.signal);
     }
-  } catch {
-    console.error('Error rendering weather data');
+
+    if (weatherData) {
+      handleFetchSuccess(savedCity, weatherData);
+    }
+  } catch (error) {
+    handleModalEvent(error.message, true);
   } finally {
     cleanupRequest(controller);
   }

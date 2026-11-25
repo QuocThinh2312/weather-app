@@ -4,7 +4,8 @@ export function normalizeLocationQuery(query) {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/đ/g, 'd')
     .replace(/Đ/g, 'D')
-    .replace(/^(thanh pho|tp\.?|tinh)\s+/i, '')
+    .replace(/^\s*tinh\b|\b(?:tp\.|(?:thanh\s+pho|tp|city)\b)/gi, '')
+    .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
 }

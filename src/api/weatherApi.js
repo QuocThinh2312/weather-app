@@ -1,12 +1,23 @@
-const API_KEY = import.meta.env.VITE_API_KEY;
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { CONFIG } from '../config/config';
+import { API_ENDPOINTS } from '../constants/endpoints';
+
+const API_KEY = CONFIG.API_KEY;
+const BASE_URL = API_ENDPOINTS.WEATHER;
 
 export async function fetchWeather(query, signal) {
   try {
-    const res = await fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=${query}&days=3`, { signal });
+    const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${query}&days=3`;
+    const res = await fetch(url, { signal });
 
     if (!res.ok) {
-      throw new Error('Unable to retrieve weather data.');
+      const errorData = await res.json();
+
+      // No matching location found
+      if (errorData?.error?.code === 1006) {
+        return null;
+      }
+
+      throw new Error(errorData?.error?.message);
     }
 
     return await res.json();
@@ -15,7 +26,7 @@ export async function fetchWeather(query, signal) {
       throw error;
     }
 
-    console.error('Error calling API: ', error);
-    return null;
+    console.error('Error calling API: ', error.message);
+    throw new Error('Server is offline. Please try again later!');
   }
 }

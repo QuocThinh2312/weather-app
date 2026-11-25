@@ -169,7 +169,7 @@
             class="flex flex-col items-center gap-10 rounded-2xl bg-white p-12 shadow-2xl @6xl:flex-row @6xl:gap-0 @6xl:p-6"
           >
             <section class="flex flex-1 flex-col items-center text-center">
-              <h1 id="location-name" class="text-text-primary mb-3 text-2xl font-bold tracking-tight sm:text-3xl"></h1>
+              <h1 id="location-name" class="text-text-primary mb-3 text-2xl font-bold tracking-tight sm:text-3xl">---</h1>
 
               <!-- Time -->
               <div
@@ -189,23 +189,24 @@
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
 
-                <time id="local-time" class="text-text-primary font-bold tabular-nums"></time>
+                <time id="local-time" class="text-text-primary font-bold tabular-nums">--:--:--</time>
 
                 <span class="text-slate-300" aria-hidden="true">•</span>
 
-                <span id="local-date" class="text-text-secondary"></span>
+                <span id="local-date" class="text-text-secondary">---, -- --</span>
               </div>
 
               <img id="weather-icon" src="/icons/weather/sunny-day.svg" alt="" class="size-40 object-contain" />
 
               <span id="current-temp" class="text-primary mb-4 text-5xl font-extrabold tracking-wide md:text-8xl">
+                ---°C
               </span>
 
-              <h2 id="weather-description" class="text-text-primary mb-2 text-2xl font-bold tracking-tight"></h2>
+              <h2 id="weather-description" class="text-text-primary mb-2 text-2xl font-bold tracking-tight">---</h2>
 
               <p class="text-text-secondary text-sm font-semibold md:text-base">
-                Min: <span id="min-temp"></span>, Max:
-                <span id="max-temp"></span>
+                Min: <span id="min-temp">---°C</span>, Max:
+                <span id="max-temp">---°C</span>
               </p>
             </section>
 
@@ -217,7 +218,7 @@
               >
                 <img src="/icons/humidity.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Humidity</h3>
-                <p id="humidity" class="text-base text-slate-700"></p>
+                <p id="humidity" class="text-base text-slate-700">--%</p>
               </li>
 
               <li
@@ -225,7 +226,7 @@
               >
                 <img src="/icons/wind.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Wind Speed</h3>
-                <p id="wind-speed" class="text-base text-slate-700"></p>
+                <p id="wind-speed" class="text-base text-slate-700">-- km/h</p>
               </li>
 
               <li
@@ -233,7 +234,7 @@
               >
                 <img src="/icons/thermometer-celsius.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Feels Like</h3>
-                <p id="feels-like" class="text-base text-slate-700"></p>
+                <p id="feels-like" class="text-base text-slate-700">--°C</p>
               </li>
 
               <li
@@ -241,7 +242,7 @@
               >
                 <img src="/icons/pressure.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Pressure</h3>
-                <p id="pressure" class="text-base text-slate-700"></p>
+                <p id="pressure" class="text-base text-slate-700">-- hPa</p>
               </li>
 
               <li
@@ -249,7 +250,7 @@
               >
                 <img src="/icons/visibility.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">Visibility</h3>
-                <p id="visibility" class="text-base text-slate-700"></p>
+                <p id="visibility" class="text-base text-slate-700">-- km</p>
               </li>
 
               <li
@@ -257,7 +258,7 @@
               >
                 <img src="/icons/uv-index.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">UV INDEX</h3>
-                <p id="uv-index" class="text-base text-slate-700"></p>
+                <p id="uv-index" class="text-base text-slate-700">--</p>
               </li>
 
               <li
@@ -265,7 +266,7 @@
               >
                 <img src="/icons/rain.svg" alt="" class="mb-2.5 size-20" />
                 <h3 class="text-text-secondary mb-1 text-xs tracking-widest uppercase">CHANCE OF RAIN</h3>
-                <p id="chance-of-rain" class="text-base text-slate-700"></p>
+                <p id="chance-of-rain" class="text-base text-slate-700">--%</p>
               </li>
             </ul>
           </article>
@@ -283,9 +284,9 @@
 
                 <img id="weather-icon-today" src="/icons/weather/sunny-day.svg" alt="" class="size-20 object-contain" />
 
-                <p id="forecast-today-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
+                <p id="forecast-today-temp" class="text-primary text-3xl font-extrabold tracking-tighter">---°C</p>
 
-                <p id="forecast-today-desc" class="text-text-secondary text-sm font-medium"></p>
+                <p id="forecast-today-desc" class="text-text-secondary text-sm font-medium">---</p>
               </li>
 
               <li
@@ -300,9 +301,9 @@
                   class="size-20 object-contain"
                 />
 
-                <p id="forecast-tomorrow-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
+                <p id="forecast-tomorrow-temp" class="text-primary text-3xl font-extrabold tracking-tighter">---°C</p>
 
-                <p id="forecast-tomorrow-desc" class="text-text-secondary text-sm font-medium"></p>
+                <p id="forecast-tomorrow-desc" class="text-text-secondary text-sm font-medium">---</p>
               </li>
 
               <li
@@ -319,9 +320,9 @@
                   class="size-20 object-contain"
                 />
 
-                <p id="forecast-day-after-temp" class="text-primary text-3xl font-extrabold tracking-tighter"></p>
+                <p id="forecast-day-after-temp" class="text-primary text-3xl font-extrabold tracking-tighter">---°C</p>
 
-                <p id="forecast-day-after-desc" class="text-text-secondary text-sm font-medium"></p>
+                <p id="forecast-day-after-desc" class="text-text-secondary text-sm font-medium">---</p>
               </li>
             </ul>
           </section>
