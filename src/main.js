@@ -3,7 +3,7 @@ import { fetchWeather } from './api/weatherApi';
 import { getLocationName } from './api/locationNameApi';
 import { renderWeatherData } from './ui/renderWeatherData';
 import { toggleSkeleton } from './ui/toggleSkeleton';
-import { handleModalEvent, isModalOpen } from './ui/handleModalEvent';
+import { handleModalEvent, isModalOpen, closeModal } from './ui/handleModalEvent';
 import { getCurrentCoords } from './utils/getCurrentCoords';
 import { cachedWeatherData, storeWeatherData, hasCachedData } from './utils/storage';
 import { normalizeLocationQuery } from './utils/normalizeLocationQuery';
@@ -14,6 +14,8 @@ const inputEl = document.querySelector('#search-input');
 const locationBtnEl = document.querySelector('#location-btn');
 
 let currentController = null;
+let hasInitialData = false;
+let isNetworkModalOpen = false;
 
 function startRequest() {
   // Hủy request cũ khi gọi request mới
@@ -38,6 +40,7 @@ function handleFetchSuccess(query, weatherData) {
   renderWeatherData(weatherData);
   startClock(weatherData.location.tz_id);
   storeWeatherData(query, weatherData);
+  hasInitialData = true;
   inputEl.focus();
 }
 
@@ -96,6 +99,11 @@ formEl.addEventListener('submit', async (e) => {
 });
 
 locationBtnEl.addEventListener('click', async () => {
+  if (!navigator.onLine) {
+    handleModalEvent('No internet connection. Please check your network!');
+    return;
+  }
+
   if (isModalOpen) {
     return;
   }
@@ -144,6 +152,27 @@ locationBtnEl.addEventListener('click', async () => {
   }
 });
 
+window.addEventListener('offline', () => {
+  if (currentController) {
+    currentController.abort();
+    cleanupRequest(currentController);
+  }
+
+  isNetworkModalOpen = true;
+  handleModalEvent('No internet connection. Please check your network!');
+});
+
+window.addEventListener('online', () => {
+  if (isNetworkModalOpen && isModalOpen) {
+    closeModal();
+    isNetworkModalOpen = false;
+  }
+
+  if (!hasInitialData) {
+    initApp();
+  }
+});
+
 async function initApp() {
   let savedCity = localStorage.getItem('lastSearchedCity') ?? 'auto:ip';
   const controller = startRequest();
@@ -160,6 +189,10 @@ async function initApp() {
       handleFetchSuccess(savedCity, weatherData);
     }
   } catch (error) {
+    if (!navigator.onLine) {
+      isNetworkModalOpen = true;
+    }
+
     handleModalEvent(error.message, Boolean(error.isServerOffline));
   } finally {
     cleanupRequest(controller);

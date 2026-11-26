@@ -15,7 +15,7 @@ function showModal(message, isServerOffline) {
   document.activeElement?.blur();
 }
 
-function closeModal() {
+export function closeModal() {
   if (!isModalOpen) {
     return;
   }

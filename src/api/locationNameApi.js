@@ -1,6 +1,10 @@
 import { API_ENDPOINTS } from '../constants/endpoints';
 
 export async function getLocationName(latitude, longitude, signal) {
+  if (!navigator.onLine) {
+    throw new Error('No internet connection. Please check your network!');
+  }
+
   try {
     const url = `${API_ENDPOINTS.REVERSE_GEOCODE}?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
     const res = await fetch(url, { signal });

@@ -5,6 +5,10 @@ const API_KEY = CONFIG.API_KEY;
 const BASE_URL = API_ENDPOINTS.WEATHER;
 
 export async function fetchWeather(query, signal) {
+  if (!navigator.onLine) {
+    throw new Error('No internet connection. Please check your network!');
+  }
+
   try {
     const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${query}&days=3`;
     const res = await fetch(url, { signal });
