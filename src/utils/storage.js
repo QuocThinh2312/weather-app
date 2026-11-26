@@ -1,4 +1,4 @@
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   LAST_SEARCHED_CITY: 'lastSearchedCity',
   CACHED_WEATHER_DATA: 'cachedWeatherData',
 };
@@ -9,16 +9,17 @@ export const cachedWeatherData = new Map(storedData);
 export function storeWeatherData(query, weatherData) {
   localStorage.setItem(STORAGE_KEYS.LAST_SEARCHED_CITY, query);
 
-  const newWeatherData = {
-    data: weatherData,
-    expiresAt: Date.now() + 60 * 5 * 1000, //Expires in 5 minutes
-  };
-  cachedWeatherData.set(query, newWeatherData);
-
-  localStorage.setItem(STORAGE_KEYS.CACHED_WEATHER_DATA, JSON.stringify([...cachedWeatherData]));
+  if (!hasCachedData(query)) {
+    const newWeatherData = {
+      data: weatherData,
+      expiresAt: Date.now() + 60 * 5 * 1000,
+    };
+    cachedWeatherData.set(query, newWeatherData);
+    localStorage.setItem(STORAGE_KEYS.CACHED_WEATHER_DATA, JSON.stringify([...cachedWeatherData]));
+  }
 }
 
-export function checkStoredData(query) {
+export function hasCachedData(query) {
   if (cachedWeatherData.has(query)) {
     const weatherData = cachedWeatherData.get(query);
     const now = Date.now();

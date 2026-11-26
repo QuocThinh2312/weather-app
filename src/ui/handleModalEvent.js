@@ -1,3 +1,5 @@
+import { STORAGE_KEYS } from '../utils/storage';
+
 const errorModalEl = document.querySelector('#error-modal');
 const errorModalMessageEl = document.querySelector('#error-modal-message');
 const errorModalCloseEl = document.querySelector('#error-modal-close');
@@ -8,7 +10,7 @@ export let isModalOpen = false;
 function showModal(message, isServerOffline) {
   errorModalMessageEl.textContent = message;
   errorModalEl.setAttribute('data-open', '');
-  errorModalEl.setAttribute('isServerOffline', isServerOffline);
+  errorModalEl.toggleAttribute('offline', isServerOffline);
   isModalOpen = true;
   document.activeElement?.blur();
 }
@@ -18,14 +20,16 @@ function closeModal() {
     return;
   }
 
+  if (errorModalEl.hasAttribute('offline')) {
+    localStorage.removeItem(STORAGE_KEYS.CACHED_WEATHER_DATA);
+    location.reload();
+    return;
+  }
+
   errorModalMessageEl.textContent = '';
   errorModalEl.removeAttribute('data-open');
   isModalOpen = false;
   inputEl.focus();
-
-  if (errorModalEl.getAttribute('isServerOffline')) {
-    location.reload();
-  }
 }
 
 errorModalEl.addEventListener('click', (e) => {

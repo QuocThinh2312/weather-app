@@ -5,7 +5,7 @@ import { renderWeatherData } from './ui/renderWeatherData';
 import { toggleSkeleton } from './ui/toggleSkeleton';
 import { handleModalEvent, isModalOpen } from './ui/handleModalEvent';
 import { getCurrentCoords } from './utils/getCurrentCoords';
-import { cachedWeatherData, storeWeatherData, checkStoredData } from './utils/storage';
+import { cachedWeatherData, storeWeatherData, hasCachedData } from './utils/storage';
 import { normalizeLocationQuery } from './utils/normalizeLocationQuery';
 import { startClock } from './ui/startClock';
 
@@ -38,14 +38,15 @@ function handleFetchSuccess(query, weatherData) {
   renderWeatherData(weatherData);
   startClock(weatherData.location.tz_id);
   storeWeatherData(query, weatherData);
+  inputEl.focus();
 }
 
 async function loadWeather(query, signal) {
   try {
-    const hasStoredData = checkStoredData(query);
+    const isCached = hasCachedData(query);
     let weatherData;
 
-    if (!hasStoredData) {
+    if (!isCached) {
       weatherData = await fetchWeather(query, signal);
     } else {
       weatherData = cachedWeatherData.get(query).data;
@@ -67,40 +68,43 @@ formEl.addEventListener('submit', async (e) => {
     return;
   }
 
-  const query = inputEl.value.trim();
+  const query = normalizeLocationQuery(inputEl.value);
   if (!query) {
     handleModalEvent('Location name cannot be empty!');
     return;
   }
 
   const controller = startRequest();
-  const cleanQuery = normalizeLocationQuery(query);
 
   try {
-    const weatherData = await loadWeather(cleanQuery, controller.signal);
+    const weatherData = await loadWeather(query, controller.signal);
 
-    // Phân biệt với null là do chủ động abort request
     if (weatherData === false) {
       handleModalEvent('Location name does not exist!');
-    } else if (weatherData) {
-      handleFetchSuccess(cleanQuery, weatherData);
+      return;
+    }
+
+    if (weatherData) {
+      handleFetchSuccess(query, weatherData);
+      inputEl.value = '';
     }
   } catch (error) {
-    handleModalEvent(error.message, true);
+    handleModalEvent(error.message, Boolean(error.isServerOffline));
   } finally {
     cleanupRequest(controller);
   }
-
-  inputEl.value = '';
 });
 
 locationBtnEl.addEventListener('click', async () => {
+  if (isModalOpen) {
+    return;
+  }
+
   const controller = startRequest();
 
   try {
     const { latitude, longitude } = await getCurrentCoords();
 
-    // Nếu request này đã bị aborted do đã gọi request mới thì thoát luôn
     if (controller.signal.aborted) {
       return;
     }
@@ -109,47 +113,54 @@ locationBtnEl.addEventListener('click', async () => {
     const lon = longitude.toFixed(3);
     const query = `${lat},${lon}`;
 
+    const isCached = hasCachedData(query);
     const [weatherData, exactLocationName] = await Promise.all([
       loadWeather(query, controller.signal),
-      getLocationName(lat, lon, controller.signal),
+      isCached ? null : getLocationName(lat, lon, controller.signal),
     ]);
 
-    if (weatherData) {
-      if (exactLocationName) {
-        weatherData.location.name = exactLocationName;
-      }
-      handleFetchSuccess(query, weatherData);
-    } else if (weatherData !== null) {
-      handleModalEvent('Weather data is not available for your current location. Please try another location!');
+    if (weatherData === null) {
+      return;
     }
+
+    if (weatherData === false) {
+      handleModalEvent('Weather data is not available for your current location. Please try another location!');
+      return;
+    }
+
+    if (exactLocationName) {
+      weatherData.location.name = exactLocationName;
+    }
+
+    handleFetchSuccess(query, weatherData);
   } catch (error) {
     if (controller.signal.aborted) {
       return;
     }
 
-    handleModalEvent(error.message, true);
+    handleModalEvent(error.message, Boolean(error.isServerOffline));
   } finally {
     cleanupRequest(controller);
   }
 });
 
 async function initApp() {
-  const savedCity = localStorage.getItem('lastSearchedCity') ?? 'auto:ip';
+  let savedCity = localStorage.getItem('lastSearchedCity') ?? 'auto:ip';
   const controller = startRequest();
 
   try {
     let weatherData = await loadWeather(savedCity, controller.signal);
 
     if (weatherData === false) {
-      const fallbackCity = 'ho chi minh';
-      weatherData = await loadWeather(fallbackCity, controller.signal);
+      savedCity = 'ho chi minh';
+      weatherData = await loadWeather(savedCity, controller.signal);
     }
 
     if (weatherData) {
       handleFetchSuccess(savedCity, weatherData);
     }
   } catch (error) {
-    handleModalEvent(error.message, true);
+    handleModalEvent(error.message, Boolean(error.isServerOffline));
   } finally {
     cleanupRequest(controller);
   }

@@ -27,6 +27,9 @@ export async function fetchWeather(query, signal) {
     }
 
     console.error('Error calling API: ', error.message);
-    throw new Error('Server is offline. Please try again later!');
+
+    const offlineError = new Error('Server is offline. Please try again later!');
+    offlineError.isServerOffline = true;
+    throw offlineError;
   }
 }
